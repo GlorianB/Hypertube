@@ -1,0 +1,37 @@
+.homePage__body {
+  h2 {
+    color: white;
+  }
+  h4 {
+    color: white;
+  }
+  padding: 50px 35px 0 50px;
+  .homePage__section {
+    display: flex;
+    .homePage__section-link {
+      margin-left: 10px;
+      font-size: 18px;
+      color: #1de9b6;
+      transition: 0.5s;
+      text-decoration: none;
+      &:hover {
+        color: #64ffda;
+        transition: 0.5s;
+      }
+    }
+    .MuiGridList-root {
+      flex-wrap: nowrap !important;
+    }
+    .homePage__section-items {
+      height: 350px;
+      width: 100%;
+      .items-img {
+        height: 300px;
+        width: 200px;
+      }
+      .MuiGridListTileBar-title {
+        margin: 0 0 5px 0;
+      }
+    }
+  }
+}

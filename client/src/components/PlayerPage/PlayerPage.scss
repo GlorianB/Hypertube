@@ -1,0 +1,90 @@
+.playerPage__body {
+  color: white;
+  p {
+    opacity: 0.6;
+  }
+  .playerPage__player {
+    margin: 30px 0 0px 0;
+    width: 100%;
+    text-align: center;
+  }
+  .MuiSvgIcon-root {
+    color: #1de9b6;
+    margin: 0 6px 5px 0;
+    height: 25px;
+    width: 25px;
+  }
+  .MuiAccordionSummary-root {
+    padding: 0;
+    min-height: 80px;
+  }
+  .playerPage__header {
+    width: 100%;
+    height: 80px;
+    .quality-btn {
+      width: 75px;
+      margin-left: 10px;
+      color: white;
+      border: 1px solid #1de9b6;
+      border-radius: 50px;
+      &:hover {
+        transition: 0.8s;
+        color: #004d40;
+        background-color: #1de9b6;
+      }
+      &:focus {
+        outline: none;
+        color: #004d40;
+        background-color: #1de9b6;
+      }
+    }
+  }
+  .MuiPaper-root,
+  .MuiAccordion-root,
+  .MuiAccordion-rounded,
+  .MuiPaper-elevation1,
+  .MuiPaper-rounded {
+    background-color: transparent;
+    color: white;
+    box-shadow: none;
+  }
+  .playerPage__information {
+    width: 100%;
+    img {
+      width: 106%;
+    }
+  }
+  .playerPage__comments {
+    width: 100%;
+    .imgProfile {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+    }
+    .send__comment {
+      margin: 0 0 30px 0;
+    }
+    .comments__space {
+      margin: 20px 0;
+      .comments {
+        margin-bottom: 2px;
+      }
+    }
+    .MuiInputBase-root {
+      border-radius: 50px;
+    }
+    .MuiOutlinedInput-notchedOutline {
+      border-color: white !important;
+    }
+    .MuiOutlinedInput-input {
+      color: white;
+    }
+    .MuiFormLabel-root {
+      color: white;
+    }
+    .MuiFormHelperText-root {
+      color: white;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+.editProfil__body {
+  h3 {
+    color: white;
+  }
+  background-color: #1c1c1c;
+  margin: 60px 0 0 0;
+  padding: 50px 50px 0 50px !important;
+  border-radius: 20px;
+  height: 860px;
+  max-width: 600px !important;
+  justify-content: center;
+  text-align: center;
+  .editProfil__profil-img {
+    height: 220px;
+    margin: 40px 0 0 0;
+    .imgProfile {
+      display: block;
+      margin: 0 auto;
+      border-radius: 50%;
+      width: 180px;
+      height: 180px;
+      object-fit: cover;
+    }
+    .uploadImgProfile-btn {
+      position: absolute;
+      width: 70px;
+      bottom: 10px;
+      left: 60px;
+    }
+  }
+}

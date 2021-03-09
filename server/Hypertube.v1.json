@@ -1,0 +1,856 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Hypertube",
+    "version": "1.0",
+    "description": "Movie streaming api"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api/v1",
+      "description": "hypertube-v1"
+    }
+  ],
+  "paths": {
+    "/user/id/{userId}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "integer"
+          },
+          "name": "userId",
+          "in": "path",
+          "required": true,
+          "description": "Id of an existing user."
+        }
+      ],
+      "get": {
+        "summary": "Get User Info by User ID",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "firstname": {
+                      "type": "string"
+                    },
+                    "lastname": {
+                      "type": "string"
+                    },
+                    "imgProfile": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "operationId": "get-users-userId",
+        "description": "Retrieve the information of the user with the matching user ID."
+      }
+    },
+    "/signin": {
+      "post": {
+        "summary": "Signin user",
+        "operationId": "post-user",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Required Information",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Log in user"
+      },
+      "parameters": []
+    },
+    "/movie": {
+      "post": {
+        "summary": "Create or update movie",
+        "operationId": "post-movie",
+        "responses": {
+          "200": {
+            "description": "User created/updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error while saving the movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "description": "Create a new movie or update an existing moving."
+      }
+    },
+    "/movie/{movie_id}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "movie_id",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get Movie Info by Movie ID",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "User fetched successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Movie"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "operationId": "get-movie-movie_id",
+        "description": "Retrieve the information of the movie with the matching movie ID."
+      },
+      "delete": {
+        "summary": "Delete Movie by Movie ID",
+        "operationId": "delete-movie-movie_id",
+        "responses": {
+          "200": {
+            "description": "User deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "description": "Delete the information of the movie with the matching user ID."
+      }
+    },
+    "/auth/is_logged": {
+      "get": {
+        "summary": "Check user login statue",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK. User is logged",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You need to be loggedin",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "operationId": "get-auth-is_logged",
+        "description": "Check if user is logged and if logged, retrieve informations about user"
+      },
+      "parameters": []
+    },
+    "/auth/google": {
+      "get": {
+        "summary": "Google oauth",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Login failed",
+            "headers": {},
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-auth-google",
+        "description": "Log in via google oauth"
+      },
+      "parameters": []
+    },
+    "/auth/42": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Login failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-auth-42",
+        "description": "Log in via 42 oauth"
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "summary": "Logout user",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "User logged out successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "User was not logged in",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "operationId": "get-auth-logout",
+        "description": "Logout a logged user"
+      },
+      "parameters": []
+    },
+    "/user/{userLogin}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "userLogin",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Get User by Login",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string"
+                    },
+                    "firstname": {
+                      "type": "string"
+                    },
+                    "lastname": {
+                      "type": "string"
+                    },
+                    "imgProfile": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "operationId": "get-user-user_login",
+        "description": "Retrieve user informations by matching user login."
+      }
+    },
+    "/user": {
+      "patch": {
+        "summary": "",
+        "operationId": "patch-user",
+        "responses": {
+          "200": {
+            "description": "User updated with success"
+          },
+          "401": {
+            "description": "You need to be logged in"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "description": "",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "description": "new user's data"
+        }
+      }
+    },
+    "/user/language/{language}": {
+      "parameters": [
+        {
+          "schema": {
+            "type": "string"
+          },
+          "name": "language",
+          "in": "path",
+          "required": true
+        }
+      ],
+      "patch": {
+        "summary": "Patch Language",
+        "operationId": "patch-user-language-language",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "description": "Edit user's language with the given language"
+      }
+    },
+    "/user/signup": {
+      "post": {
+        "summary": "Signup user",
+        "operationId": "post-user-signup",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "501": {
+            "description": "Not Implemented"
+          }
+        },
+        "description": "Create new user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "description": "new user"
+        }
+      }
+    },
+    "/user/uploadImg": {
+      "post": {
+        "summary": "",
+        "operationId": "post-user-uploadImg",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "summary": "Upload user image",
+        "operationId": "post-user-image",
+        "description": "update user's image",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {}
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              }
+            }
+          },
+          "description": "file"
+        }
+      }
+    },
+    "/user/activateUser": {
+      "post": {
+        "summary": "Post activate user",
+        "operationId": "post-user-activateUser",
+        "responses": {
+          "200": {
+            "description": "Account activated"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        },
+        "description": "activate user account",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "username",
+            "description": "username"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "urlToken",
+            "description": "correspond to user's vkey"
+          }
+        ]
+      }
+    },
+    "/user/resetPasswordEmail": {
+      "post": {
+        "summary": "Reset password email",
+        "operationId": "post-user-resetPasswordEmail",
+        "responses": {
+          "200": {
+            "description": "Email sent"
+          },
+          "404": {
+            "description": "Email not found"
+          }
+        },
+        "description": "Send an email when user reset his password"
+      }
+    },
+    "/user/resetPasswordPage": {
+      "post": {
+        "summary": "Reset password page",
+        "operationId": "post-user-resetPasswordPage",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Token incorrect"
+          }
+        },
+        "description": "Check if user is allowed on reset password page",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "email",
+            "description": "email"
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "urlToken",
+            "description": "correspond to user's fkey"
+          }
+        ]
+      }
+    },
+    "/user/resetPassword": {
+      "post": {
+        "summary": "Reset password",
+        "operationId": "post-user-resetPassword",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Passwords don't match"
+          }
+        },
+        "description": "Update user's password with new password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "password": {
+                    "type": "object",
+                    "properties": {
+                      "password": {
+                        "type": "string"
+                      },
+                      "confirmPassword": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "description": "password and password confirmation"
+        }
+      }
+    },
+    "/user/editPassword": {
+      "post": {
+        "summary": "Edit Password",
+        "operationId": "post-user-editPassword",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "You're loggedin via omniauth"
+          },
+          "401": {
+            "description": "You need to be loggedin"
+          }
+        },
+        "description": "Update loggedin user's password with new password",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "oldPassword": {
+                    "type": "string"
+                  },
+                  "newPassword": {
+                    "type": "string"
+                  },
+                  "confirmNewPassword": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "description": "passwords"
+        }
+      }
+    },
+    "/user/editProfil": {
+      "post": {
+        "summary": "Edit profile",
+        "operationId": "post-user-editProfil",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "You need to be loggedin"
+          }
+        },
+        "description": "Edit user's profile"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "title": "User",
+        "type": "object",
+        "description": "Application's user",
+        "x-examples": {
+          "Alice Smith": {
+            "lastname": "Alice",
+            "firstname": "Smith",
+            "username": "Alsmith",
+            "email": "alice.smith@mail.com",
+            "imgProfile": "freepic.com/defaultImage.png",
+            "password": "Pas$w0rd",
+            "language": "en",
+            "vkey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdCJ9LCJpYXQiOjE2MDk5NDM3MzQsImV4cCI6MTYxMDAzMDEzNH0.C8bxLfrcRgFC4Cx8u4FCcSn4309bSuSBf4Qz-B3nEao",
+            "fkey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdCJ9LCJpYXQiOjE2MDk5NDM3MzQsImV4cCI6MTYxMDAzMDEzNH0.C8bxLfrcRgFC4Cx8u4FCcSn4309bSuSBf4Qz-B3nEao",
+            "history": [
+              {
+                "movie_id": 1,
+                "comments": [
+                  {
+                    "user_login": "Marc7",
+                    "content": "Nice movie !"
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "properties": {
+          "lastname": {
+            "type": "string"
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "example@mail.com"
+          },
+          "imgProfile": {
+            "description": "path/URI of profile image",
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "description": "",
+            "pattern": "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$",
+            "minLength": 8
+          },
+          "language": {
+            "type": "string",
+            "description": "User's language",
+            "default": "en"
+          },
+          "vkey": {
+            "type": "string",
+            "description": "User's validation key after registration"
+          },
+          "fkey": {
+            "type": "string",
+            "description": "User's validation key after forgot email"
+          },
+          "history": {
+            "type": "array",
+            "description": "User's watch history",
+            "items": {
+              "$ref": "#/components/schemas/Movie"
+            }
+          }
+        },
+        "required": [
+          "lastname",
+          "firstname",
+          "username",
+          "email",
+          "language"
+        ]
+      },
+      "Movie": {
+        "title": "Movie",
+        "type": "object",
+        "properties": {
+          "movie_id": {
+            "type": "number"
+          },
+          "comments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "user_login": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "user_login",
+                "content"
+              ]
+            }
+          }
+        },
+        "required": [
+          "movie_id"
+        ],
+        "x-examples": {
+          "Spiderman2": {
+            "movie_id": 1,
+            "comments": [
+              {
+                "user_login": "Marc7",
+                "content": "Nice movie !"
+              }
+            ]
+          }
+        },
+        "description": "Application's movie"
+      }
+    },
+    "securitySchemes": {},
+    "responses": {}
+  }
+}
